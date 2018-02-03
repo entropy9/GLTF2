@@ -26,8 +26,11 @@
         }
       });
 
+
+
       const content = `
       <a-entity gltf-model="#drone" shadow="receive: true" samsung-logo>
+      <a-plane shadow="cast:true;receive:true;" rotation="-90 0 0" width="200" height="200" color="#ffffff"></a-plane>
       </a-entity>`;
       
       window.addEventListener('click', function () {
@@ -36,7 +39,7 @@
         var el = document.createElement('a-entity');
         AFRAME.scenes[0].appendChild(el);
         el.innerHTML = content;
-        el.setAttribute('scale', '0.001, 0.001, 0.001');
+        el.setAttribute('scale', '0.01, 0.01, 0.01');
         el.setAttribute('position', mark.getAttribute('position'));
       });
     </script>
@@ -49,11 +52,11 @@
 
 
        <a-assets>
-        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/pistola/scene.gltf" id="drone" ></a-asset-item>
+        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/robotic_arm/scene.gltf" id="drone" ></a-asset-item>
       </a-assets>  
       
       <!-- add global lighting -->
-      <a-entity light="type: ambient; castShadow:false; color: #fff; intensity: 1"></a-entity>
+      <a-entity light="type: ambient; castShadow:false; color: #fff; intensity: 0.5"></a-entity>
       <a-entity light="type:directional; 
       castShadow:true; 
       shadowBias:0.00001; 

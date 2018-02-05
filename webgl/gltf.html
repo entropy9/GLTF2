@@ -7,6 +7,7 @@
     <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
     <script src="https://rawgit.com/google-ar/three.ar.js/f9603ee/dist/three.ar.js"></script>
     <script src="https://rawgit.com/chenzlabs/aframe-ar/827e9db/dist/aframe-ar.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras.animation-mixer@3.13.1/dist/aframe-extras.animation-mixer.min.js"></script>
 
 <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 
@@ -27,8 +28,8 @@
       });
 
       const content = `
-      <a-entity gltf-model="#drone" shadow="receive: true" samsung-logo>
-      </a-entity>`;
+     <a-entity gltf-model="#drone" animation-mixer="clip: *; duration: AUTO; crossFadeDuration: 0" scale="" material="envMap: #sky; roughness: 0.2"  position="-0 0 0" shadow="receive: true" rotation="0 -90 0" samsung-logo>
+</a-entity>`;
       
       window.addEventListener('click', function () {
         // Put the logo where the mark is.
@@ -36,7 +37,7 @@
         var el = document.createElement('a-entity');
         AFRAME.scenes[0].appendChild(el);
         el.innerHTML = content;
-        el.setAttribute('scale', '0.001, 0.001, 0.001');
+        el.setAttribute('scale', '0.002, 0.002, 0.002');
         el.setAttribute('position', mark.getAttribute('position'));
       });
     </script>
@@ -47,9 +48,17 @@
 <body style='margin : 0px; overflow: hidden;'>
   <a-scene ar shadow="autoUpdate: true" light="defaultLightsEnabled: false">
 
-
-       <a-assets>
-        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/pistola/scene.gltf" id="drone" ></a-asset-item>
+      <a-assets>
+       <img id="frontS" src="https://cdn.rawgit.com/entropy9/GLTF2/f0d6f83f/images/radialG.png">
+       <a-cubemap id="sky">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_right.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_left.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_top.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_bottom.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_front.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_back.jpg">
+       </a-cubemap>
+        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/pistola/scene.gltf" material="envMap: #sky; roughness: 0" id="drone"></a-asset-item>
       </a-assets>  
       
       <!-- add global lighting -->

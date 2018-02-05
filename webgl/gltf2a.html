@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="https://rawgit.com/google-ar/three.ar.js/f9603ee/dist/three.ar.js"></script>
+    <script src="https://rawgit.com/chenzlabs/aframe-ar/827e9db/dist/aframe-ar.min.js"></script>
+        <script src="https://unpkg.com/aframe-extras.animation-mixer@3.13.1/dist/aframe-extras.animation-mixer.min.js"></script>
+
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+ <script>
+      AFRAME.registerComponent('samsung-logo', {
+        init: function () {
+          var el = this.el;
+          //var purple = new THREE.MeshBasicMaterial(); <a-plane shadow="cast:false;receive:true;" rotation="-90 0 0" width="200" height="200" color="#ffffff"></a-plane> 
+          //purple.color = new THREE.Color('#706CF5');
+          //var white = new THREE.MeshBasicMaterial();
+          //white.color = new THREE.Color('#ffffff');
+          var planeMaterial = new THREE.ShadowMaterial();
+          planeMaterial.opacity = 0.2;
+
+          el.addEventListener('model-loaded', function () {
+            el.object3D.traverse(function (o) {
+               
+            })
+          });
+        }
+      });
+
+
+
+      const content = `
+      <a-entity gltf-model="#drone" shadow="receive: true" rotation="0 90 0" samsung-logo>
+     </a-entity>
+       <a-plane position="0 -1 -0" rotation="-90 0 0" alphatest="1" metalness="0.2" transparent="true" opacity="1" shadow="cast:false;receive:true;" width="4" height="4" color="#ffffff" envMap="#sky" roughness="0.2" src="#frontS"></a-plane>`;
+      
+      window.addEventListener('click', function () {
+        // Put the logo where the mark is.
+        var mark = document.querySelector('#mark');
+        var el = document.createElement('a-entity');
+        AFRAME.scenes[0].appendChild(el);
+        el.innerHTML = content;
+        el.setAttribute('scale', '0.2, 0.2, 0.2');
+        el.setAttribute('position', mark.getAttribute('position'));
+      });
+    </script>
+
+
+
+</head>
+<body style='margin : 0px; overflow: hidden;'>
+  <a-scene ar shadow="autoUpdate: true" light="defaultLightsEnabled: false">
+
+
+       <a-assets>
+       <img id="frontS" src="https://cdn.rawgit.com/entropy9/GLTF2/master/images/radialG.png">
+       <a-cubemap id="sky">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_right.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_left.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_top.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_bottom.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_front.jpg">
+       <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_back.jpg">
+       </a-cubemap>
+        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/DamagedHelmet/glTF/DamagedHelmet.gltf" material="envMap: #sky; roughness: 0" id="drone"></a-asset-item>
+      </a-assets>  
+      
+      <!-- add global lighting -->
+      <a-entity light="type: ambient; castShadow:false; color: #fff; intensity: 0.5"></a-entity>
+      <a-entity light="type:directional; 
+      castShadow:true; 
+      shadowBias:0.000001; 
+      intensity: 1; 
+      shadowMapHeight:2048; 
+      shadowMapWidth:2048;" 
+      position="-1 1 1" 
+      target="#directionaltarget">
+      <a-entity id="directionaltarget" position="0 0 -1" shadow="cast:false;receive:false;" ></a-entity>
+      </a-entity>
+
+      <!-- Use AR raycaster, and set raycaster to ignore all A-Frame objects like logos. -->
+      <a-entity ar-raycaster raycaster="objects:none"></a-entity>
+      <!-- Declare a ring to use as the raycaster intersection mark. -->
+      <a-ring id="mark" rotation="-90 0 0" radius-inner="0.01" radius-outer="0.02"></a-ring>
+
+    <script>
+      var raycaster = document.querySelector('[ar-raycaster]');
+      var mark = document.querySelector('#mark');
+      
+      raycaster.addEventListener('raycaster-intersection', function (evt) {
+        // Turn the mark green and move it to the intersection point.
+        mark.setAttribute('color', 'green');
+        // FIXME: lerp position
+        mark.setAttribute('position', evt.detail.intersections[0].point);
+      });
+      
+      raycaster.addEventListener('raycaster-intersection-cleared', function (evt) {
+        // Turn the mark red.  FIXME: lerp position
+        mark.setAttribute('color', 'red');
+      });      
+    </script>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+</html>
+
+
+      
+    

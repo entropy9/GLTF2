@@ -33,9 +33,9 @@
 
 
       const content = `
-      <a-entity gltf-model="#drone" shadow="receive: true" rotation="0 90 0" samsung-logo>
-     </a-entity>
-       <a-plane position="0 -1 -0" rotation="-90 0 0" alphatest="1" metalness="0.2" transparent="true" opacity="1" shadow="cast:false;receive:true;" width="4" height="4" color="#ffffff" envMap="#sky" roughness="0.2" src="#frontS"></a-plane>`;
+       <a-entity gltf-model="#drone" animation-mixer="clip: *; duration: AUTO; crossFadeDuration: 0" scale="0.007 0.007 0.007" material="envMap: #sky; roughness: 0.2"  position="-0 0 0" shadow="receive: true" rotation="0 -90 0" samsung-logo>
+</a-entity>
+       <a-plane position="0 0 0" rotation="-90 0 0" alphatest="1" metalness="0.2" transparent="true" opacity="1" shadow="cast:false;receive:true;" width="4" height="4" color="#ffffff" envMap="#sky" roughness="0.2" src="#frontS"></a-plane>`;
       
       window.addEventListener('click', function () {
         // Put the logo where the mark is.
@@ -65,7 +65,7 @@
        <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_front.jpg">
        <img src="https://raw.githubusercontent.com/entropy9/GLTF2/b74dbaf4/images/environment_back.jpg">
        </a-cubemap>
-        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/DamagedHelmet/glTF/DamagedHelmet.gltf" material="envMap: #sky; roughness: 0" id="drone"></a-asset-item>
+        <a-asset-item src="https://cdn.rawgit.com/entropy9/GLTF2/master/src_models/basic_sci-fi_crate/scene.gltf" material="envMap: #sky; roughness: 0" id="drone"></a-asset-item>
       </a-assets>  
       
       <!-- add global lighting -->
